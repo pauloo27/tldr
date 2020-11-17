@@ -6,6 +6,8 @@ import (
 	"os/exec"
 )
 
+var CATEGORIES = []string{"common", "linux", "osx", "sunos", "windows"}
+
 const (
 	REPO_PATH = "https://github.com/tldr-pages/tldr.git"
 )
@@ -33,10 +35,18 @@ func Load(repoDir string) error {
 	return nil
 }
 
-func Find(repoPath, lang, pageName string) string {
+func Find(repoPath, lang, pageName string) (path string) {
 	langPath := "pages"
 	if lang != "" {
 		langPath += "." + lang
 	}
-	return fmt.Sprintf("%s/%s/%s.md", repoPath, langPath, pageName)
+	for _, category := range CATEGORIES {
+		path = fmt.Sprintf("%s/%s/%s/%s.md", repoPath, langPath, category, pageName)
+		_, err := os.Stat(path)
+		if !os.IsNotExist(err) {
+			return
+		}
+	}
+	path = ""
+	return
 }
