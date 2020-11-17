@@ -16,8 +16,10 @@ func main() {
 
 	repoPath := home + "/.cache/tldr"
 
-	err = godotenv.Load()
-	utils.HandleFatal("Cannot load .env", err)
+	dotenvPath := home + "/.config/tldr.env"
+
+	err = godotenv.Load(dotenvPath)
+	utils.HandleFatal("Cannot load .env. Copy the default .env to "+dotenvPath, err)
 
 	lang := os.Getenv("TLDR_LANG")
 	viewer := os.Getenv("TLDR_VIEWER")
