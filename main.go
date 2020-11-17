@@ -28,9 +28,15 @@ func main() {
 		fmt.Println("Missing page parameter")
 		os.Exit(-1)
 	} else {
-		pageName := os.Args[1]
 		err := repo.Load(repoPath)
 		utils.HandleFatal("Cannot load repo", err)
+
+		pageName := os.Args[1]
+		if pageName == "--update" {
+			err = repo.Update(repoPath)
+			utils.HandleFatal("Cannot update repo", err)
+			return
+		}
 
 		pagePath, err := repo.Find(repoPath, lang, pageName)
 		utils.HandleFatal("Cannot find page", err)

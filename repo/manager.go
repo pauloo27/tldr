@@ -18,8 +18,10 @@ func Clone(repoDir string) (err error) {
 	return
 }
 
-func Update(repoDir string) {
-	// TODO
+func Update(repoDir string) (err error) {
+	cmd := exec.Command("git", "-C", repoDir, "pull")
+	err = cmd.Run()
+	return
 }
 
 func IsCloned(repoDir string) bool {
