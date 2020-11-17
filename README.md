@@ -15,8 +15,8 @@ Recommended viewer: [catmd](https://www.archlinux.org/packages/community/x86_64/
 Also: `cat`, `bat`, `less`.
 
 ## Info
-The tldr pages repository will be cloned to `~/.cache/tldr`. Once cloned, it's 
-not updated tho (yet).
+The tldr pages repository will be cloned to `~/.cache/tldr`. 
+Once cloned, run `tldr --update` to update the pages.
 
 ## License
 
