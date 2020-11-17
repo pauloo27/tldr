@@ -35,7 +35,8 @@ func Load(repoDir string) error {
 	return nil
 }
 
-func Find(repoPath, lang, pageName string) (path string) {
+func Find(repoPath, lang, pageName string) (string, error) {
+	path := ""
 	langPath := "pages"
 	if lang != "" {
 		langPath += "." + lang
@@ -44,9 +45,14 @@ func Find(repoPath, lang, pageName string) (path string) {
 		path = fmt.Sprintf("%s/%s/%s/%s.md", repoPath, langPath, category, pageName)
 		_, err := os.Stat(path)
 		if !os.IsNotExist(err) {
-			return
+			return path, nil
 		}
 	}
-	path = ""
-	return
+	err := fmt.Errorf(
+		"Cannot find page %s in the lang %s in any of the categories %v",
+		pageName,
+		lang,
+		CATEGORIES,
+	)
+	return "", err
 }

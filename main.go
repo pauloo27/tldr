@@ -28,7 +28,9 @@ func main() {
 		err := repo.Load(repoPath)
 		utils.HandleFatal("Cannot load repo", err)
 
-		pagePath := repo.Find(repoPath, lang, pageName)
+		pagePath, err := repo.Find(repoPath, lang, pageName)
+
+		utils.HandleFatal("Cannot find page", err)
 
 		fmt.Println(pagePath)
 	}
