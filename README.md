@@ -10,7 +10,7 @@ Install it:
 > $ make install
 
 ## Viewers
-Recommended viewer: ![catmd](https://www.archlinux.org/packages/community/x86_64/mdcat/).
+Recommended viewer: [catmd](https://www.archlinux.org/packages/community/x86_64/mdcat/).
 
 Also: `cat`, `bat`, `less`.
 
