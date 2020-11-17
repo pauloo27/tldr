@@ -32,3 +32,11 @@ func Load(repoDir string) error {
 	}
 	return nil
 }
+
+func Find(repoPath, lang, pageName string) string {
+	langPath := "pages"
+	if lang != "" {
+		langPath += "." + lang
+	}
+	return fmt.Sprintf("%s/%s/%s.md", repoPath, langPath, pageName)
+}
