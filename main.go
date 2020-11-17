@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"syscall"
 
 	"github.com/Pauloo27/tldr/repo"
 	"github.com/Pauloo27/tldr/utils"
@@ -19,6 +20,7 @@ func main() {
 	utils.HandleFatal("Cannot load .env", err)
 
 	lang := os.Getenv("TLDR_LANG")
+	viewer := os.Getenv("TLDR_VIEWER")
 
 	if len(os.Args) == 1 {
 		fmt.Println("Missing page parameter")
@@ -32,6 +34,7 @@ func main() {
 
 		utils.HandleFatal("Cannot find page", err)
 
-		fmt.Println(pagePath)
+		err = syscall.Exec(viewer, []string{viewer, pagePath}, os.Environ())
+		utils.HandleFatal("Cannot run viewer", err)
 	}
 }
