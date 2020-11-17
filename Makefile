@@ -1,5 +1,7 @@
 build:
 		go build
 
-run: build
-	./tldr
+install: build
+	cp ./.env ~/.config/tldr.env
+	sudo cp ./tldr /usr/bin/
+
