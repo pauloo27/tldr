@@ -33,7 +33,6 @@ func main() {
 		utils.HandleFatal("Cannot load repo", err)
 
 		pagePath, err := repo.Find(repoPath, lang, pageName)
-
 		utils.HandleFatal("Cannot find page", err)
 
 		err = syscall.Exec(viewer, []string{viewer, pagePath}, os.Environ())
