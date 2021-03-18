@@ -32,9 +32,10 @@ func main() {
 		utils.HandleFatal("Cannot load repo", err)
 
 		pageName := os.Args[1]
-		if pageName == "--update" {
+		if pageName == "-u" {
 			err = repo.Update(repoPath)
 			utils.HandleFatal("Cannot update repo", err)
+			fmt.Println("Cache updated.")
 			return
 		}
 

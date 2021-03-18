@@ -31,7 +31,7 @@ func IsCloned(repoDir string) bool {
 
 func Load(repoDir string) error {
 	if !IsCloned(repoDir) {
-		fmt.Println("Repo not found, cloning to", repoDir)
+		fmt.Printf("Repo not found, cloning to %s... It may take a while...\n", repoDir)
 		return Clone(repoDir)
 	}
 	return nil
