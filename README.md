@@ -3,6 +3,22 @@
 [TL;DR pages](https://github.com/tldr-pages/tldr/) in Go.
 
 ## How to install
+With Go, run:
+> go get github.com/Pauloo27/tldr
+
+And then create the config at `~/.config/tldr.env` with the following content:
+```env
+# bs, da, de, es, fr, hbs, hi, id, it, ja, ko, ml, nl, no, pl, pt_BR, pt_PT, ru, sv, ta, th, tr, zh, zh_TW
+TLDR_LANG=""
+# bat, cat, less, vim, mdcat
+TLDR_VIEWER="/usr/bin/less"
+```
+
+_You can set a language, leave it empty to use English._
+
+_I recommend using mdcat as the viewer_
+
+## Compiling
 Clone the project:
 > $ git clone https://github.com/Pauloo27/tldr.git && cd tldr
 
