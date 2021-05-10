@@ -14,6 +14,9 @@ TLDR_LANG=""
 TLDR_VIEWER="/usr/bin/less"
 ```
 
+_You also need to add the Go binary folder to your path, if you haven't done it yet._
+_If you don't know where the Go binary folder is, run `go env GOPATH`._
+
 _You can set a language, leave it empty to use English._
 
 _I recommend using mdcat as the viewer_
