@@ -4,7 +4,7 @@
 
 ## How to install
 With Go, run:
-> go get github.com/Pauloo27/tldr
+> go install github.com/Pauloo27/tldr@latest
 
 And then create the config at `~/.config/tldr.env` with the following content:
 ```env
