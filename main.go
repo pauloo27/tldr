@@ -5,9 +5,9 @@ import (
 	"os"
 	"syscall"
 
-	"github.com/Pauloo27/tldr/repo"
-	"github.com/Pauloo27/tldr/utils"
 	"github.com/joho/godotenv"
+	"github.com/pauloo27/tldr/repo"
+	"github.com/pauloo27/tldr/utils"
 )
 
 func main() {

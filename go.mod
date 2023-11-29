@@ -1,4 +1,4 @@
-module github.com/Pauloo27/tldr
+module github.com/pauloo27/tldr
 
 go 1.15
 
