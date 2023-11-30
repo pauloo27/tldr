@@ -13,6 +13,7 @@ var (
 	isList    bool
 	language  string
 	platform  string
+	viewer    string
 )
 
 var rootCmd = &cobra.Command{
@@ -57,6 +58,13 @@ func init() {
 		"language", "L",
 		"en",
 		"Specifies the preferred language for the page returned. Example: de or pt_BR. Against the spec, the LANG environment is ignored",
+	)
+
+	rootCmd.Flags().StringVarP(
+		&viewer,
+		"viewer", "V",
+		"less",
+		"Specifies viewer of the page. Example: less, bat, mdcat",
 	)
 }
 

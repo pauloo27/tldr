@@ -79,8 +79,16 @@ func handleCommand(cmd *cobra.Command, args []string) {
 	path := findPage(repoPath, platform, language, page)
 
 	if path != "" {
-		showPage(path)
+		err = showPage(path)
+		if err != nil {
+			fmt.Println("Error showing page", err)
+			os.Exit(1)
+		}
+		return
 	}
+
+	fmt.Println("Page not found. Maybe try updating the cache with --update?")
+	os.Exit(1)
 }
 
 func ensureRepoExists(repoPath string) error {
