@@ -55,7 +55,11 @@ func handleCommand(cmd *cobra.Command, args []string) {
 	}
 
 	if isList {
-		listPages(repoPath, platform)
+		err := listPages(repoPath, platform)
+		if err != nil {
+			fmt.Println("Error listing pages", err)
+			os.Exit(1)
+		}
 		return
 	}
 
