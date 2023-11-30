@@ -10,16 +10,17 @@ import (
 var (
 	isUpdate  bool
 	isVersion bool
-	isList    bool   // TODO
-	language  string // TODO
-	platform  string // TODO
+	isList    bool // TODO
+	language  string
+	platform  string
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "tldr [page]",
-	Short: "TL;DR pages",
-	Long:  "TL;DR pages reader written in Go, not fully complaint with the specification",
-	Run:   handleCommand,
+	Use:     "tldr [page]",
+	Example: "tldr git clone",
+	Short:   "TL;DR pages",
+	Long:    "TL;DR pages reader written in Go, NOT FULLY complaint with the specification",
+	Run:     handleCommand,
 }
 
 func init() {
@@ -35,6 +36,20 @@ func init() {
 		"update", "u",
 		false,
 		"Updates the offline cache of pages",
+	)
+
+	rootCmd.Flags().StringVarP(
+		&platform,
+		"platform", "p",
+		"",
+		"Specifies the platform to be used to perform the action (either listing or searching) as an argument. If not specified, the current one is used",
+	)
+
+	rootCmd.Flags().StringVarP(
+		&language,
+		"language", "L",
+		"en",
+		"Specifies the preferred language for the page returned. Example: de or pt_BR. Against the spec, the LANG environment is ignored",
 	)
 }
 
