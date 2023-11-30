@@ -41,6 +41,24 @@ func handleCommand(cmd *cobra.Command, args []string) {
 		return
 	}
 
+	if platform == "" {
+		osName := runtime.GOOS
+		switch osName {
+		case "darwin":
+			platform = "osx"
+		case "linux", "windows", "freebsd", "openbsd", "netbsd", "sunos":
+			platform = osName
+		default:
+			fmt.Printf("Platform %s not supported\n", osName)
+			os.Exit(1)
+		}
+	}
+
+	if isList {
+		listPages(repoPath, platform)
+		return
+	}
+
 	if len(args) == 0 {
 		fmt.Println("No page specified")
 		_ = cmd.Help()
@@ -57,19 +75,6 @@ func handleCommand(cmd *cobra.Command, args []string) {
 	}
 
 	page := pageStrBuilder.String()
-
-	if platform == "" {
-		osName := runtime.GOOS
-		switch osName {
-		case "darwin":
-			platform = "osx"
-		case "linux", "windows", "freebsd", "openbsd", "netbsd", "sunos":
-			platform = osName
-		default:
-			fmt.Printf("Platform %s not supported\n", osName)
-			os.Exit(1)
-		}
-	}
 
 	path := findPage(repoPath, platform, language, page)
 

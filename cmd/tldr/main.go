@@ -10,7 +10,7 @@ import (
 var (
 	isUpdate  bool
 	isVersion bool
-	isList    bool // TODO
+	isList    bool
 	language  string
 	platform  string
 )
@@ -29,6 +29,13 @@ func init() {
 		"version", "v",
 		false,
 		"Shows the current version of the client, and the version of this specification that it implements",
+	)
+
+	rootCmd.Flags().BoolVarP(
+		&isList,
+		"list", "l",
+		false,
+		"List available pages for the current platform. Can be overriden with the --platform flag",
 	)
 
 	rootCmd.Flags().BoolVarP(
