@@ -8,6 +8,10 @@ import (
 	"github.com/spf13/viper"
 )
 
+const (
+	ConfigPath = "$HOME/.config/tldr"
+)
+
 var (
 	isUpdate  bool
 	isVersion bool
@@ -21,7 +25,7 @@ var rootCmd = &cobra.Command{
 	Use:     "tldr [page]",
 	Example: "tldr git clone",
 	Short:   "TL;DR pages",
-	Long:    "TL;DR pages reader written in Go, NOT FULLY complaint with the specification",
+	Long:    "TL;DR pages reader written in Go, NOT FULLY complaint with the specification. Place a config at " + ConfigPath,
 	Run:     handleCommand,
 }
 
@@ -56,7 +60,7 @@ func init() {
 
 	viper.SetConfigType("toml")
 	viper.SetConfigName("config.toml")
-	viper.AddConfigPath("$HOME/.config/tldr")
+	viper.AddConfigPath(ConfigPath)
 	viper.SetDefault("viewer", "less")
 	viper.SetDefault("language", "en")
 
