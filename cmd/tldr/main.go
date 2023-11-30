@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -53,17 +54,34 @@ func init() {
 		"Specifies the platform to be used to perform the action (either listing or searching) as an argument. If not specified, the current one is used",
 	)
 
+	viper.SetConfigType("toml")
+	viper.SetConfigName("config.toml")
+	viper.AddConfigPath("$HOME/.config/tldr")
+	viper.SetDefault("viewer", "less")
+	viper.SetDefault("language", "en")
+
+	err := viper.ReadInConfig()
+	if err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+			fmt.Printf("Cannot load config file: %s\n", err)
+			os.Exit(1)
+		}
+	}
+
+	defaultViewer := viper.GetString("viewer")
+	defaultLanguage := viper.GetString("language")
+
 	rootCmd.Flags().StringVarP(
 		&language,
 		"language", "L",
-		"en",
+		defaultLanguage,
 		"Specifies the preferred language for the page returned. Example: de or pt_BR. Against the spec, the LANG environment is ignored",
 	)
 
 	rootCmd.Flags().StringVarP(
 		&viewer,
 		"viewer", "V",
-		"less",
+		defaultViewer,
 		"Specifies viewer of the page. Example: less, bat, mdcat",
 	)
 }
