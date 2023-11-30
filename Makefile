@@ -30,6 +30,9 @@ endif
 tidy:
 	go mod tidy
 
+install: build
+	sudo cp ./tldr /usr/bin/
+
 .PHONY: lint
 lint:
 	revive -formatter friendly -config revive.toml ./...

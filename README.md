@@ -1,55 +1,54 @@
 # TLDR
 
-[TL;DR pages](https://github.com/tldr-pages/tldr/) in Go.
+Unofficial [TL;DR pages](https://github.com/tldr-pages/tldr/) in Go.
+
+_not fully compatible with the specification_
 
 ## How to install
-With Go, run:
-> go install github.com/pauloo27/tldr@latest
 
-And then create the config at `~/.config/tldr.env` with the following content:
-```env
-# bs, da, de, es, fr, hbs, hi, id, it, ja, ko, ml, nl, no, pl, pt_BR, pt_PT, ru, sv, ta, th, tr, zh, zh_TW
-TLDR_LANG=""
-# bat, cat, less, vim, mdcat
-TLDR_VIEWER="/usr/bin/less"
+### With Go, run:
+
+```bash
+go install github.com/pauloo27/tldr/cmd/tldr@latest
 ```
 
 _You also need to add the Go binary folder to your path, if you haven't done it yet._
 _If you don't know where the Go binary folder is, run `go env GOPATH`._
 
-_You can set a language, leave it empty to use English._
+### Manually compiling
 
-_I recommend using mdcat as the viewer_
-
-## Compiling
 Clone the project:
-> $ git clone https://github.com/Pauloo27/tldr.git && cd tldr
+```bash
+git clone https://github.com/Pauloo27/tldr.git && cd tldr
+```
 
 Install it:
-> $ make install
+```sudo
+sudo make install
+```
 
-## Viewers
-Recommended viewer: [catmd](https://www.archlinux.org/packages/community/x86_64/mdcat/).
+## Config
 
-Also: `cat`, `bat`, `less`.
+Create a config at `~/.config/tldr/config.toml`, example:
+
+```toml
+viewer="less"
+language="en"
+```
+
+_I recommend using bat or mdcat as the viewer_
 
 ## Info
-The tldr pages repository will be cloned to `~/.cache/tldr`. 
-Once cloned, run `tldr --update` to update the pages.
+The tldr pages repository will be cloned to `~/.cache/tldr-repo`. 
+Once cloned, run `tldr -u` to update the pages.
 
 ## License
 
-<img src="https://i.imgur.com/AuQQfiB.png" alt="GPL Logo" height="100px" />
+This project is licensed under the [MIT license](./LICENSE).
 
-This project is licensed under [GNU General Public License v2.0](./LICENSE).
-
-This program is free software; you can redistribute it and/or modify 
-it under the terms of the GNU General Public License as published by 
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
