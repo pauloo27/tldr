@@ -10,7 +10,7 @@ import (
 
 // #nosec G304 it is what it is
 func showPage(path string) error {
-	if !tty.IsTTY() {
+	if !tty.IsTTY() || viewer == "" {
 		data, err := os.ReadFile(path)
 		if err != nil {
 			return err
