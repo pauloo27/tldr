@@ -19,7 +19,7 @@ func handleCommand(cmd *cobra.Command, args []string) int {
 
 	home, err := os.UserHomeDir()
 	if err != nil {
-		fmt.Println("Error getting user home directory", err)
+		printErr("Error getting user home directory", err)
 		return 1
 	}
 
@@ -27,7 +27,7 @@ func handleCommand(cmd *cobra.Command, args []string) int {
 
 	err = ensureRepoExists(repoPath)
 	if err != nil {
-		fmt.Println("Error cloning repository", err)
+		printErr("Error cloning repository", err)
 		return 1
 	}
 
@@ -35,7 +35,7 @@ func handleCommand(cmd *cobra.Command, args []string) int {
 		fmt.Println("Updating repository...")
 		err = repo.Pull(repoPath)
 		if err != nil {
-			fmt.Println("Error updating repository", err)
+			printErr("Error updating repository", err)
 			return 1
 		}
 		return 0
@@ -49,7 +49,7 @@ func handleCommand(cmd *cobra.Command, args []string) int {
 		case "linux", "windows", "freebsd", "openbsd", "netbsd", "sunos":
 			platform = osName
 		default:
-			fmt.Printf("Platform %s not supported\n", osName)
+			printErrMsg(fmt.Sprintf("Platform %s not supported\n", osName))
 			return 1
 		}
 	}
@@ -57,14 +57,14 @@ func handleCommand(cmd *cobra.Command, args []string) int {
 	if isList {
 		err := listPages(repoPath, platform)
 		if err != nil {
-			fmt.Println("Error listing pages", err)
+			printErr("Error listing pages", err)
 			return 1
 		}
 		return 0
 	}
 
 	if len(args) == 0 {
-		fmt.Println("No page specified")
+		printErrMsg("No page specified")
 		_ = cmd.Help()
 		return 1
 	}
@@ -83,13 +83,13 @@ func handleCommand(cmd *cobra.Command, args []string) int {
 	path := findPage(repoPath, platform, language, page)
 
 	if path == "" {
-		fmt.Println("Page not found. Maybe try updating the cache with --update?")
+		printErrMsg("Page not found. Maybe try updating the cache with --update?")
 		return 1
 	}
 
 	err = showPage(path)
 	if err != nil {
-		fmt.Println("Error showing page", err)
+		printErr("Error showing page", err)
 		return 1
 	}
 
