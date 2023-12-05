@@ -49,7 +49,7 @@ func handleCommand(cmd *cobra.Command, args []string) int {
 		case "linux", "windows", "freebsd", "openbsd", "netbsd", "sunos":
 			platform = osName
 		default:
-			printErrMsg(fmt.Sprintf("Platform %s not supported\n", osName))
+			printErrMsg(fmt.Sprintf("Platform %s not supported", osName))
 			return 1
 		}
 	}
