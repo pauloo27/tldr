@@ -11,16 +11,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func handleCommand(cmd *cobra.Command, args []string) {
+func handleCommand(cmd *cobra.Command, args []string) int {
 	if isVersion {
 		printVersion()
-		return
+		return 0
 	}
 
 	home, err := os.UserHomeDir()
 	if err != nil {
 		fmt.Println("Error getting user home directory", err)
-		os.Exit(1)
+		return 1
 	}
 
 	repoPath := fmt.Sprintf("%s/.cache/tldr-repo", home)
@@ -28,7 +28,7 @@ func handleCommand(cmd *cobra.Command, args []string) {
 	err = ensureRepoExists(repoPath)
 	if err != nil {
 		fmt.Println("Error cloning repository", err)
-		os.Exit(1)
+		return 1
 	}
 
 	if isUpdate {
@@ -36,9 +36,9 @@ func handleCommand(cmd *cobra.Command, args []string) {
 		err = repo.Pull(repoPath)
 		if err != nil {
 			fmt.Println("Error updating repository", err)
-			os.Exit(1)
+			return 1
 		}
-		return
+		return 0
 	}
 
 	if platform == "" {
@@ -50,7 +50,7 @@ func handleCommand(cmd *cobra.Command, args []string) {
 			platform = osName
 		default:
 			fmt.Printf("Platform %s not supported\n", osName)
-			os.Exit(1)
+			return 1
 		}
 	}
 
@@ -58,15 +58,15 @@ func handleCommand(cmd *cobra.Command, args []string) {
 		err := listPages(repoPath, platform)
 		if err != nil {
 			fmt.Println("Error listing pages", err)
-			os.Exit(1)
+			return 1
 		}
-		return
+		return 0
 	}
 
 	if len(args) == 0 {
 		fmt.Println("No page specified")
 		_ = cmd.Help()
-		os.Exit(1)
+		return 1
 	}
 
 	pageStrBuilder := strings.Builder{}
@@ -82,17 +82,18 @@ func handleCommand(cmd *cobra.Command, args []string) {
 
 	path := findPage(repoPath, platform, language, page)
 
-	if path != "" {
-		err = showPage(path)
-		if err != nil {
-			fmt.Println("Error showing page", err)
-			os.Exit(1)
-		}
-		return
+	if path == "" {
+		fmt.Println("Page not found. Maybe try updating the cache with --update?")
+		return 1
 	}
 
-	fmt.Println("Page not found. Maybe try updating the cache with --update?")
-	os.Exit(1)
+	err = showPage(path)
+	if err != nil {
+		fmt.Println("Error showing page", err)
+		return 1
+	}
+
+	return 0
 }
 
 func ensureRepoExists(repoPath string) error {

@@ -26,7 +26,7 @@ var rootCmd = &cobra.Command{
 	Example: "tldr git clone",
 	Short:   "TL;DR pages",
 	Long:    "TL;DR pages reader written in Go, NOT FULLY complaint with the specification. Place a config at " + ConfigPath,
-	Run:     handleCommand,
+	Run:     func(cmd *cobra.Command, args []string) { os.Exit(handleCommand(cmd, args)) },
 }
 
 func init() {
