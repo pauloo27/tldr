@@ -46,5 +46,35 @@
           program = "${self.packages.${system}.default}/bin/tldr";
         };
       }
-    );
+    ) // {
+      homeManagerModules.default = { config, lib, pkgs, ... }:
+        let
+          cfg = config.programs.tldr-go;
+        in {
+          options.programs.tldr-go = {
+            enable = lib.mkEnableOption "tldr-go client";
+
+            viewer = lib.mkOption {
+              type = lib.types.str;
+              default = "less";
+              description = "Viewer program for pages";
+            };
+
+            language = lib.mkOption {
+              type = lib.types.str;
+              default = "en";
+              description = "Default language for pages";
+            };
+          };
+
+          config = lib.mkIf cfg.enable {
+            home.packages = [ self.packages.${pkgs.system}.default ];
+
+            xdg.configFile."tldr/config.toml".text = ''
+              viewer = "${cfg.viewer}"
+              language = "${cfg.language}"
+            '';
+          };
+        };
+    };
 }
