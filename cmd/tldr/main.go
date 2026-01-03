@@ -4,12 +4,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/pauloo27/tldr/internal/xdg"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-)
-
-const (
-	ConfigPath = "$HOME/.config/tldr"
 )
 
 var (
@@ -25,7 +22,7 @@ var rootCmd = &cobra.Command{
 	Use:     "tldr [page]",
 	Example: "tldr git clone",
 	Short:   "TL;DR pages",
-	Long:    "TL;DR pages reader written in Go, NOT FULLY complaint with the specification. Place a config at " + ConfigPath,
+	Long:    "TL;DR pages reader written in Go, NOT FULLY complaint with the specification",
 	Run:     func(cmd *cobra.Command, args []string) { os.Exit(handleCommand(cmd, args)) },
 }
 
@@ -60,7 +57,7 @@ func init() {
 
 	viper.SetConfigType("toml")
 	viper.SetConfigName("config.toml")
-	viper.AddConfigPath(ConfigPath)
+	viper.AddConfigPath(xdg.ConfigDir())
 	viper.SetDefault("viewer", "less")
 	viper.SetDefault("language", "en")
 

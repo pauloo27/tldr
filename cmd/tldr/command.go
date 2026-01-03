@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 
 	"github.com/pauloo27/tldr/internal/repo"
 	"github.com/pauloo27/tldr/internal/tty"
+	"github.com/pauloo27/tldr/internal/xdg"
 	"github.com/spf13/cobra"
 )
 
@@ -17,15 +18,9 @@ func handleCommand(cmd *cobra.Command, args []string) int {
 		return 0
 	}
 
-	home, err := os.UserHomeDir()
-	if err != nil {
-		printErr("Error getting user home directory", err)
-		return 1
-	}
+	repoPath := filepath.Join(xdg.CacheDir(), "repo")
 
-	repoPath := fmt.Sprintf("%s/.cache/tldr-repo", home)
-
-	err = ensureRepoExists(repoPath)
+	err := ensureRepoExists(repoPath)
 	if err != nil {
 		printErr("Error cloning repository", err)
 		return 1
