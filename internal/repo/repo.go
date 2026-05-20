@@ -15,7 +15,7 @@ func IsCloned(repoDir string) bool {
 }
 
 func Clone(repoDir string) error {
-	cmd := exec.Command("git", "clone", RemoteRepoURL, repoDir)
+	cmd := exec.Command("git", "clone", "--depth", "1", RemoteRepoURL, repoDir)
 	return cmd.Run()
 }
 
